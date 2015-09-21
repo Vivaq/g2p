@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+
+        nav {
+            line-height:30px;
+            height:625px;
+            opacity: 0.88;
+            background-color: darkslategrey;
+            width:800px;
+            float:left;
+            padding:5px;
+        }
+        section {
+            width:450px;
+            float:left;
+            padding:5px;
+        }
+    </style>
+    <script>
+        var res={};
+        function reset() {
+            document.getElementById("database-out").innerHTML = '';
+        }
+        function save(){
+            /*if(document.getElementById("database-out").value == ""){
+             var res={};
+             }
+             else{
+             res=JSON.parse(document.getElementById("database-out").value);
+             }*/
+            var reg = document.getElementById("rule_input").value;
+            var phoneme = document.getElementById("ph_input").value;
+            var letter = getOption();
+            if(phoneme == "" || reg==""){
+                alert("Za każdym razem kiedy zapominasz podać fonem/regułę gdzieś na świecie ginie mały króliczek! :(");
+                window.open('http://tapety.tja.pl/obrazki/tja_normalne//89902.jpg', "", "top=100, left=400, width=500, height=400");
+                return false;
+            }
+            if(Object.keys(res).indexOf(letter)<=-1){
+                res[letter] = {};
+                res[letter][phoneme] = [[reg]];
+            }
+            else {
+                if(Object.keys(res[letter]).indexOf(phoneme)<=-1){
+                    res[letter][phoneme] = [[reg]];
+                }
+                else {
+                    res[letter][phoneme].push([reg]);
+                }
+            }
+
+            refresh();
+        }
+        function getOption() {
+            var obj = document.getElementById("letter_input");
+            return obj.options[obj.selectedIndex].text;
+        }
+        function refresh(){
+
+            document.getElementById('rule_input').innerHTML = "";
+            document.getElementById("database-out").innerHTML = JSON.stringify(res, null ,2);
+        }
+        function del(){
+            var phoneme = document.getElementById("ph_input").value;
+            var letter = getOption();
+            var reg = document.getElementById("rule_input").value;
+            if(reg==""){
+                delete res[letter][phoneme];
+            }
+            else{
+                res[letter][phoneme].splice(reg-1, 1);
+            }
+            refresh();
+        }
+        function bgChange(bg) {
+            document.body.style.background = bg;
+        }
+        function getRules(){
+            return 'Utwórz bezpośrednio na dysku C plik data.txt i wywołaj python manage.py runserver jeszcze raz, data.txt będzie przechowywał tabele transkrypcyjne, które wprowadzisz\n\n' +
+                    'Reguły wprowadzania:\n' +
+                    '1. Wybierz literę, dla której chcesz wprowadzić reguły\n' +
+                    '2. Wprowadź reguły, wg schematu, _ oznacza literę, dla której wprowadasz reguły, to co jest przed (po) _ oznacza poprzedniki (następniki) litery. Ciągi znaków można wpisywać razem, ale muszą być wzięte w cudzysłów, dodatkowo ciągi znaków muszą być rozdzielone od zbiorów przecinkami,\n ' +
+                    'Przykład: "poz", A-["o"],"_a",(B+["e","a"])*D oznacza, że przed daną literą na poycji -4 do -2 muszą wystąpić znaki "poz", na pozycji -1 musi wystąpić znak ze zbioru A, ale nie może być literą "o", na pozycji +1 musi wystąpić "a", a na pozycji +2 musi wystąpić coś ze bioru B lub litera "e", bądź "a", a na pozycji +3 musi wystąpić coś ze zbioru D\n'+
+                    '3. Wprowadź fonem, na który zostanie przekształcona litera jeśli reguły zostaną spełnione\n\n' +
+                    'Reguły usuwania:\n' +
+                    'Jeśli chcesz usunąć cały fonem: Wprowadź tylko literę i fonem\n' +
+                    'Jeśli chcesz usunąć daną regułę z fonemu: Wprowadź literę, fonem i numer reguły (od 1 do n), którą chcesz usunąć\n';
+        }
+    </script>
+    <title></title>
+</head>
+<body onload="window.scroll(0, 10); reset();" style="background-color: lightgreen">
+<table style="width:1330px;height:30px">
+    <tr>
+        <td onmouseover="bgChange(this.style.backgroundColor)"
+            style="background-color: lightgoldenrodyellow">
+        </td>
+        <td onmouseover="bgChange(this.style.backgroundColor)"
+            style="background-color:lightgreen">
+        </td>
+        <td onmouseover="bgChange(this.style.backgroundColor)"
+            style="background-color: pink">
+        </td>
+        <td onmouseover="bgChange(this.style.backgroundColor)"
+            style="background-color: bisque">
+        </td>
+        <td onmouseover="bgChange(this.style.backgroundColor)"
+            style="background-color: lightblue">
+        </td>
+        <td onmouseover="bgChange(this.style.backgroundColor)"
+            style="background-color: gainsboro">
+        </td>
+    </tr>
+</table>
+<nav>
+    <br>
+    <p align="center" style="font-family: cursive;">Wybierz literę, dla której chcesz wprowadzić reguły fonematyczne:</p>
+    <p align="center">
+        <select style="font-size: large; border-style: outset" id="letter_input">
+            <option>ą</option>
+            <option>b</option>
+            <option>c</option>
+            <option>ć</option>
+            <option>d</option>
+            <option>ę</option>
+            <option>f</option>
+            <option>g</option>
+            <option>h</option>
+            <option>i</option>
+            <option>k</option>
+            <option>ł</option>
+            <option>n</option>
+            <option>ń</option>
+            <option>ó</option>
+            <option>p</option>
+            <option>r</option>
+            <option>s</option>
+            <option>ś</option>
+            <option>t</option>
+            <option>u</option>
+            <option>w</option>
+            <option>y</option>
+            <option>z</option>
+            <option>ż</option>
+            <option>ź</option>
+        </select>
+    </p>
+    <br>
+    <a style="font-family: cursive;">Wprowadź reguły:</a><br>
+    <textarea style="border:inset 4px powderblue; border-radius: 15px" rows="15" cols="110" id="rule_input"></textarea><br><br>
+    <p align="center">
+        <a style="font-family: cursive">Fonem:</a><br>
+        <input type="text" style="border-style: hidden;" id="ph_input"><br>
+        <input type="button" onclick="save()" value="Wprowadź do bazy">
+        <input type="button"  onclick="del()" value="Usuń z bazy"><br>
+        <input type="button" onclick="alert(getRules())" value="Info-kliknij mnie na początku">
+    </p>
+</nav>
+<section>
+    <form action="{% url 'download_data' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <textarea id='database-out' readonly style="border:inset 4px powderblue;" rows="39" cols="60" typeof="{{ form.docfile }}"></textarea>
+        Wciśnięcie spowoduje zapis do pliku i wyzerowanie bazy!<input type="submit" value="Download" />
+    </form>
+</section>
+</body>
+</html>
