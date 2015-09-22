@@ -33,7 +33,7 @@ class MyList(list):
     def __rmul__(self, other):
         return map(''.join, list(product(other, self)))
 
-def ex(x):
+def execSetsSplitStringsAndMakeProducts(x):
     A = MyList('a', u'ą', 'e', u'ę', 'i', 'o', u'ó', 'u', 'y')
     D = MyList('b', 'd', 'g', 'z', u'ź', u'ż')
     T = MyList('c', u'ć', 'f', 'h', 'k', 'p', 's', u'ś', 't')
@@ -57,7 +57,7 @@ def ex(x):
     return x
 
 @method_decorator(csrf_exempt)
-def download_data(request):
+def downloadData(request):
     if request.method == 'POST':
         with open('C:\data.txt', 'r') as f:
             try:
@@ -65,9 +65,9 @@ def download_data(request):
             except:
                 jsn = {}
         with open('C:\data.txt', 'w') as f:
-            jsn.update(ex(request.POST.get('docfile')))
+            jsn.update(execSetsSplitStringsAndMakeProducts(request.POST.get('docfile')))
             json.dump(jsn, f)
-        return HttpResponseRedirect(reverse('g2p.views.download_data'))
+        return HttpResponseRedirect(reverse('g2p.views.downloadData'))
     else:
         form = DocumentForm()
     return render_to_response(

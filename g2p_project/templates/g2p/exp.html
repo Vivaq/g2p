@@ -159,9 +159,10 @@
         <input type="button"  onclick="del()" value="Usuń z bazy"><br>
         <input type="button" onclick="alert(getRules())" value="Info-kliknij mnie na początku">
     </p>
+    By Jakub Olszak 2015
 </nav>
 <section>
-    <form action="{% url 'download_data' %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'downloadData' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <textarea id='database-out' readonly style="border:inset 4px powderblue;" rows="39" cols="60" typeof="{{ form.docfile }}"></textarea>
         Wciśnięcie spowoduje zapis do pliku i wyzerowanie bazy!<input type="submit" value="Download" />
