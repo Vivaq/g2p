@@ -9,5 +9,6 @@ U¿ywanie:
 
 P.S Bêd¹ update'y m.in. dodanie nowych zbiorów
 P.S.2 ZnadŸ Easter-Egga ;)
+P.S.3 Najlepsza rozdzielczoœæ to 1366x768
 
 Kontakt: viva995@gmail.com
