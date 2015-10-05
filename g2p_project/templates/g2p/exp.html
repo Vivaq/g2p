@@ -2,12 +2,28 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>Open G2P</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.2.3/css/foundation.css">
     <style>
+        header {
+            height: 59px;
+            background-color: darkseagreen;
+            margin-top: -0.1cm;
+        }
 
+        header p {
+            margin-left: 5cm;
+        }
+        i{
+            font-family: "Arial Black", Gadget, cursive;
+        }
+        p input{
+
+        }
         nav {
             line-height:30px;
-            height:625px;
+            height:642px;
             opacity: 0.88;
             background-color: darkslategrey;
             width:800px;
@@ -18,7 +34,35 @@
             width:450px;
             float:left;
             padding:5px;
+            margin-top: -0.14cm;
+            margin-left: -0.12cm;
         }
+        select{
+            height: 40px;
+            width: 40px;
+            background-color: #008cba;
+            border-color: #008cba;
+            color: white;
+        }
+            select:hover, select:focus{
+                background-color: #007095;
+                border-color: #007095;
+            }
+        h2{
+            font-family: "Trebuchet MS", Helvetica, sans-serif;
+        }
+        .for_buttons{
+            margin-top: -1.4cm;
+            margin-bottom: 0.9cm;
+        }
+        button.success, .button.success {
+            background-color: darkseagreen;
+            color: black;
+            border-color: darkseagreen;
+        }
+            button.success:hover, button.success:focus, .button.success:hover, .button.success:focus{
+                color: black;
+            }
     </style>
     <script>
         var res={};
@@ -76,9 +120,7 @@
             }
             refresh();
         }
-        function bgChange(bg) {
-            document.body.style.background = bg;
-        }
+
         function getRules(){
             return 'Utwórz bezpośrednio na dysku C plik data.txt i wywołaj python manage.py runserver jeszcze raz, data.txt będzie przechowywał tabele transkrypcyjne, które wprowadzisz\n\n' +
                     'Reguły wprowadzania:\n' +
@@ -91,82 +133,77 @@
                     'Jeśli chcesz usunąć daną regułę z fonemu: Wprowadź literę, fonem i numer reguły (od 1 do n), którą chcesz usunąć\n';
         }
     </script>
-    <title></title>
 </head>
-<body onload="window.scroll(0, 10); reset();" style="background-color: lightgreen">
-<table style="width:1330px;height:30px">
-    <tr>
-        <td onmouseover="bgChange(this.style.backgroundColor)"
-            style="background-color: lightgoldenrodyellow">
-        </td>
-        <td onmouseover="bgChange(this.style.backgroundColor)"
-            style="background-color:lightgreen">
-        </td>
-        <td onmouseover="bgChange(this.style.backgroundColor)"
-            style="background-color: pink">
-        </td>
-        <td onmouseover="bgChange(this.style.backgroundColor)"
-            style="background-color: bisque">
-        </td>
-        <td onmouseover="bgChange(this.style.backgroundColor)"
-            style="background-color: lightblue">
-        </td>
-        <td onmouseover="bgChange(this.style.backgroundColor)"
-            style="background-color: gainsboro">
-        </td>
-    </tr>
-</table>
-<nav>
-    <br>
-    <p align="center" style="font-family: cursive;">Wybierz literę, dla której chcesz wprowadzić reguły fonematyczne:</p>
-    <p align="center">
-        <select style="font-size: large; border-style: outset" id="letter_input">
-            <option>ą</option>
-            <option>b</option>
-            <option>c</option>
-            <option>ć</option>
-            <option>d</option>
-            <option>ę</option>
-            <option>f</option>
-            <option>g</option>
-            <option>h</option>
-            <option>i</option>
-            <option>k</option>
-            <option>ł</option>
-            <option>n</option>
-            <option>ń</option>
-            <option>ó</option>
-            <option>p</option>
-            <option>r</option>
-            <option>s</option>
-            <option>ś</option>
-            <option>t</option>
-            <option>u</option>
-            <option>w</option>
-            <option>y</option>
-            <option>z</option>
-            <option>ż</option>
-            <option>ź</option>
-        </select>
-    </p>
-    <br>
-    <a style="font-family: cursive;">Wprowadź reguły:</a><br>
-    <textarea style="border:inset 4px powderblue; border-radius: 15px" rows="15" cols="110" id="rule_input"></textarea><br><br>
-    <p align="center">
-        <a style="font-family: cursive">Fonem:</a><br>
-        <input type="text" style="border-style: hidden;" id="ph_input"><br>
-        <input type="button" onclick="save()" value="Wprowadź do bazy">
-        <input type="button"  onclick="del()" value="Usuń z bazy"><br>
-        <input type="button" onclick="alert(getRules())" value="Info-kliknij mnie na początku">
-    </p>
-    By Jakub Olszak 2015
-</nav>
-<section>
-    <form action="{% url 'downloadData' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <textarea id='database-out' readonly style="border:inset 4px powderblue;" rows="39" cols="60" typeof="{{ form.docfile }}"></textarea>
-        Wciśnięcie spowoduje zapis do pliku i wyzerowanie bazy!<input type="submit" value="Download" />
-    </form>
-</section>
+<body onload="reset()" style="background-color: white">
+    <header>
+        <h2>
+            Open G2P
+            <p class="for_buttons">
+                <input class="large success button" type="button" value="wprowadź">
+                <input class="large success button" type="button" value="podgląd">
+            </p>
+        </h2>
+
+    </header>
+
+
+    <nav>
+        <br>
+        <div><i>Wybierz literę, dla której chcesz wprowadzić reguły fonematyczne:</i></div>
+        <p align="center">
+                <select style="font-size: large; border-style: outset" id="letter_input">
+                    <option>ą</option>
+                    <option>b</option>
+                    <option>c</option>
+                    <option>ć</option>
+                    <option>d</option>
+                    <option>ę</option>
+                    <option>f</option>
+                    <option>g</option>
+                    <option>h</option>
+                    <option>i</option>
+                    <option>k</option>
+                    <option>ł</option>
+                    <option>n</option>
+                    <option>ń</option>
+                    <option>ó</option>
+                    <option>p</option>
+                    <option>r</option>
+                    <option>s</option>
+                    <option>ś</option>
+                    <option>t</option>
+                    <option>u</option>
+                    <option>w</option>
+                    <option>y</option>
+                    <option>z</option>
+                    <option>ż</option>
+                    <option>ź</option>
+                </select>
+        </p>
+        <div>
+            <i>Wprowadź reguły:</i>
+        </div>
+        <div class="row">
+            <textarea rows="11" id="rule_input"></textarea>
+        </div>
+        <i>Fonem:</i>
+        <p align="center">
+            <input type="text" style="border-style: hidden;" id="ph_input"><br>
+            <input class="tiny button" type="button" onclick="save()" value="Wprowadź do bazy">
+            <input class="tiny button" type="button"  onclick="del()" value="Usuń z bazy"><br>
+            <input class="tiny button" type="button" onclick="alert(getRules())" value="Info-kliknij mnie na początku">
+        </p>
+        <br>
+        By Jakub Olszak 2015
+    </nav>
+    <section>
+        <form action="/downloadData/" method="post">
+            {% csrf_token %}
+            <textarea id='database-out' readonly rows="39" cols="60" typeof="{{form.docfile}}"></textarea>
+            Wciśnięcie spowoduje zapis do pliku i wyzerowanie bazy!
+            <input class="tiny button" type="submit" value="Download">
+        </form>
+    </section>
 </body>
 </html>
+                              

@@ -38,10 +38,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'g2p.middleware.RequireLoginMiddleware',
 )
 
 LOGIN_REQUIRED_URLS = (
     r'/(.*)$',  # TODO interpret this regex.
+    r'/downloadData(.*)$'
 )
 LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'/login(.*)$',
