@@ -32,7 +32,8 @@ if __name__ == "__main__":
         db = sqlite3.connect(os.getcwd()+'\g2p_project\database.sqlite3')
         c = db.cursor()
         db.commit()
-        eval(c.execute('select * from g2p_document').next()[1])
+        all_rules = eval(c.execute('select * from g2p_document').next()[1])
+        print all_rules
         for curr, lex in enumerate(text):
             if lex in all_rules.keys():
                 rules_for_letter = all_rules[lex]

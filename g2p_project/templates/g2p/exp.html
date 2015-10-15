@@ -6,6 +6,13 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.2.3/css/foundation.css">
     <style>
+        input[type="text"]{
+            width: 20%;
+        }
+        textarea.shorter{
+            width: 80%;
+            margin-left: 10%;
+        }
         header {
             height: 59px;
             background-color: darkseagreen;
@@ -26,16 +33,15 @@
             height:642px;
             opacity: 0.88;
             background-color: darkslategrey;
-            width:800px;
+            width:100%;
             float:left;
             padding:5px;
         }
         section {
-            width:450px;
+            width: 100%;
             float:left;
             padding:5px;
             margin-top: -0.14cm;
-            margin-left: -0.12cm;
         }
         select{
             height: 40px;
@@ -52,7 +58,7 @@
             font-family: "Trebuchet MS", Helvetica, sans-serif;
         }
         .for_buttons{
-            margin-top: -1.4cm;
+            margin-top: -1.38cm;
             margin-bottom: 0.9cm;
         }
         button.success, .button.success {
@@ -63,8 +69,35 @@
             button.success:hover, button.success:focus, .button.success:hover, .button.success:focus{
                 color: black;
             }
+        .pok{
+            display: none;
+        }
+        .wpr{
+            display: none;
+        }
     </style>
     <script>
+        $(document).ready(function() {
+            $("#in").click(function () {
+                $(".pok").hide();
+                $(".inf").hide();
+                $(".wpr").show();
+            });
+        });
+        $(document).ready(function(){
+            $("#out").click(function(){
+                $(".pok").show();
+                $(".inf").hide();
+                $(".wpr").hide();
+            });
+        });
+        $(document).ready(function(){
+            $("#info").click(function(){
+                $(".pok").hide();
+                $(".inf").show();
+                $(".wpr").hide();
+            });
+        });
         var res={};
         function reset() {
             document.getElementById("database-out").innerHTML = '';
@@ -139,15 +172,16 @@
         <h2>
             Open G2P
             <p class="for_buttons">
-                <input class="large success button" type="button" value="wprowadź">
-                <input class="large success button" type="button" value="podgląd">
+                <input id="info" class="large success button" type="button" value="info o autorze">
+                <input id="in" class="large success button" type="button" value="wprowadź">
+                <input id="out" class="large success button" type="button" value="podgląd">
+                <a href="/logout" class="right"><i>Wyloguj mnie`</i></a>
             </p>
         </h2>
-
     </header>
 
+    <nav class="wpr">
 
-    <nav>
         <br>
         <div><i>Wybierz literę, dla której chcesz wprowadzić reguły fonematyczne:</i></div>
         <p align="center">
@@ -183,27 +217,37 @@
         <div>
             <i>Wprowadź reguły:</i>
         </div>
-        <div class="row">
-            <textarea rows="11" id="rule_input"></textarea>
-        </div>
+        <textarea class="shorter" id="rule_input" rows="11" ></textarea>
         <i>Fonem:</i>
         <p align="center">
-            <input type="text" style="border-style: hidden;" id="ph_input"><br>
+            <input type="text" id="ph_input"><br>
             <input class="tiny button" type="button" onclick="save()" value="Wprowadź do bazy">
             <input class="tiny button" type="button"  onclick="del()" value="Usuń z bazy"><br>
             <input class="tiny button" type="button" onclick="alert(getRules())" value="Info-kliknij mnie na początku">
         </p>
         <br>
-        By Jakub Olszak 2015
     </nav>
-    <section>
+    <section class="pok">
         <form action="/downloadData/" method="post">
             {% csrf_token %}
-            <textarea id='database-out' readonly rows="39" cols="60" typeof="{{form.docfile}}"></textarea>
+            <textarea id='database-out' readonly rows="35" cols="60" typeof="{{form.docfile}}"></textarea>
             Wciśnięcie spowoduje zapis do pliku i wyzerowanie bazy!
             <input class="tiny button" type="submit" value="Download">
         </form>
     </section>
+    <footer class="inf">
+        <h4 align="center">
+            Witaj!<br>
+            Znalazłeś się w programie służącym do wprowadzania reguł fonematycznych dla języka polskiego<br>
+            Wszystkie informacje potrzebne do obsługi programu znajdują się w Readme<br>
+            Jeśli zechcesz skopiować mój kod do swojego projektu to bardzo proszę, abyś w swoim programie wspomniał o pierwotnym autorze ;)<br><br><br>
+        </h4>
+        <i>
+            Kontakt: viva995@gmail.com<br>
+            Autor: Jakub Olszak
+        </i>
+    </footer>
+
 </body>
 </html>
                               

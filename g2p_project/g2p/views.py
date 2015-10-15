@@ -60,7 +60,7 @@ def execSetsSplitStringsAndMakeProducts(x):
                 x.values()[i].values()[j][k] = rule
     return x
 
-
+@login_required
 def downloadData(request):
     if request.method == 'POST':
         '''with open('C:\data.txt', 'r') as f:
@@ -93,7 +93,3 @@ def downloadData(request):
         {'form': form},
         context_instance=RequestContext(request)
     )
-
-
-def home(req):
-    return render(req, 'g2p/exp.html')
