@@ -1,3 +1,2 @@
-g2p_project/.idea/
+g2p_project/.idea/*
 *.pyc
-*.xml
